@@ -9,6 +9,7 @@ public class DivisionTableViewProvider implements DivisionViewProvider {
    private static final String PREFIX = "_";
    private static final String VERTICAL_LINE = "|";
    private static final String HORIZONTAL_LINE = "-";
+   private static final String TRANSITION_TO_NEW_LINE = "\r\n";
 
    @Override
    public String provideDivisionView(List<DivisionStep> steps, int dividend, int divisor) {
@@ -25,14 +26,14 @@ public class DivisionTableViewProvider implements DivisionViewProvider {
       String tabs = SPACE_DELIMITER;
 
       result.append(PREFIX).append(dividend).append(SPACE_DELIMITER).append(VERTICAL_LINE).append(divisor)
-            .append("\r\n");
+            .append(TRANSITION_TO_NEW_LINE);
 
       for (int i = 0; i < steps.size(); i++) {
          if (getCondition(dividend, divisor, steps.get(i).getIntermediateValue(),
                steps.get(i).getIncompliteQuotient())) {
             if (i > 0) {
                result.append(tabs.replaceFirst(".$", PREFIX)).append(steps.get(i).getIncompliteQuotient())
-                     .append("\r\n");
+                     .append(TRANSITION_TO_NEW_LINE);
             }
 
             tabs = getCorrectTabLength(tabs, steps.get(i).getIncompliteQuotient(), steps.get(i).getIntermediateValue());
@@ -49,10 +50,10 @@ public class DivisionTableViewProvider implements DivisionViewProvider {
                      .append(SPACE_DELIMITER).append(VERTICAL_LINE);
             }
 
-            result.append("\r\n");
+            result.append(TRANSITION_TO_NEW_LINE);
 
             result.append(tabs).append(getHorizontalLine(String.valueOf(steps.get(i).getIntermediateValue()).length()))
-                  .append("\r\n");
+                  .append(TRANSITION_TO_NEW_LINE);
 
             tabs = getTabs(steps.get(i).getIncompliteQuotient(), steps.get(i).getDifference(), prevTabLength);
 
